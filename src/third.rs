@@ -54,6 +54,7 @@ fn compare_and_swap<T, F>(x: &mut [T], forward: bool, comparator: &F) where F: F
 #[cfg(test)]
 mod tests {
     use crate::SortOrder::*;
+    use crate::utils::{is_sorted_ordering, new_u32_vec};
 
     use super::{sort, sort_by};
 
@@ -72,6 +73,14 @@ mod tests {
                 age,
             }
         }
+    }
+
+    #[test]
+    fn sort_u32_large() {
+        let mut x = new_u32_vec(65536);
+
+        assert_eq!(sort(&mut x, &Ascending), Ok(()));
+        assert!(is_sorted_ordering(&x, Ascending));
     }
 
     #[test]
